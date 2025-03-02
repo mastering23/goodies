@@ -5,8 +5,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-await client.connect(); 
-
 app.get('/', (req, res) => {
   res.send("Nature's Goodies");
 });
@@ -14,7 +12,7 @@ app.get('/', (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
 
- 
+    await client.connect();
 
     const result = await client.query('SELECT * FROM products'); 
 
