@@ -12,8 +12,6 @@ app.get('/', (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
 
-    await client.connect();
-
     const result = await client.query('SELECT * FROM products'); 
 
     res.json(result.rows);  
@@ -34,6 +32,12 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 
 });
+
+const connectToDb = async () => {
+  await client.connect();
+}
+
+connectToDb();
 
 
 
