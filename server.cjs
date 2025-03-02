@@ -1,4 +1,3 @@
-require('dotenv').config({ path: './.env' });
 const client = require('./client.cjs'); 
 const express = require('express');
 const app = express();
@@ -6,6 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+await client.connect(); 
 
 app.get('/', (req, res) => {
   res.send("Nature's Goodies");
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
 
-    await client.connect(); 
+ 
 
     const result = await client.query('SELECT * FROM products'); 
 
@@ -24,7 +24,6 @@ app.get('/api/products', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch products' });
   } 
-    await client.end();    
 });
 
 app.get('/test', async (req, res) => {
