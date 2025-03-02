@@ -20,6 +20,17 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+app.get("/api/products/:type", async (req, res) => {
+  try {
+    const result = await client.query("SELECT * FROM products WHERE type = $1", [req.params.type]);
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch products" });
+  }
+});
+
 app.get("/api/products/:id", async (req, res) => {
   try {
     const result = await client.query("SELECT * FROM products WHERE id = $1", [req.params.id]);
@@ -31,13 +42,24 @@ app.get("/api/products/:id", async (req, res) => {
   }
 });
 
+// app.get("/api/insertMockData", async (req, res) => {
+//   try {
+//     const result = await client.query("");
+
+//     res.json(result.rows);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Failed to fetch products" });
+//   }
+// });
+
 app.post("/api/products", async (req, res) => {
-  const { name, type, description, price } = req.body;
+  const { name, type, description, price, imageLink } = req.body;
 
   try {
     const result = await client.query(
-      "INSERT INTO products (name, type, description, price) VALUES ($1, $2, $3, $4) RETURNING *",
-      [name, type, description, price]
+      "INSERT INTO products (name, type, description, price, image_link) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [name, type, description, price, imageLink]
     );
 
     res.json(result.rows);
