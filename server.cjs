@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.send("Nature's Goodies");
 });
 
-app.get('/products', async (req, res) => {
+app.get('/api/products', async (req, res) => {
   try {
 
     await client.connect(); 
@@ -26,6 +26,12 @@ app.get('/products', async (req, res) => {
   } 
     await client.end();    
 });
+
+app.get('/test', async (req, res) => {
+  res.send("test is working");
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
