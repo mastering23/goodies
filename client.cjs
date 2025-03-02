@@ -1,4 +1,5 @@
 
+require('dotenv').config({ path: './.env' });
 const { Client } = require('pg');
 // console.log('PGUSER:', process.env.PGUSER);  // Check if environment variables are loaded
 // console.log('PGPASSWORD:', process.env.PGPASSWORD);  // Should log 'code'
