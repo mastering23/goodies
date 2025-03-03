@@ -2,17 +2,17 @@ const client = require("./client.cjs");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors = require("cors");
+// const cors = require("cors");
 
 app.use(express.json());
 
-const corsOptions = {
-  origin: `${process.env.origin}`, // Adjust based on where the front-end is hosted
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true, // If you need cookies/authentication
-};
+// const corsOptions = {
+//   origin: `${process.env.origin}`, // Adjust based on where the front-end is hosted
+//   methods: 'GET,POST,PUT,DELETE',
+//   credentials: true, // If you need cookies/authentication
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Nature's Goodies");
@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 
 // Fetch all products
 app.get("/api/products", async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   try {
     const result = await client.query("SELECT * FROM products");
     res.json(result.rows);
