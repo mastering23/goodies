@@ -2,8 +2,17 @@ const client = require("./client.cjs");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 
 app.use(express.json());
+
+const corsOptions = {
+  origin: `${process.env.origin}`, // Adjust based on where the front-end is hosted
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true, // If you need cookies/authentication
+};
+
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Nature's Goodies");
